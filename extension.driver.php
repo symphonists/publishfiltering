@@ -39,7 +39,7 @@
 			$page = $context['parent']->Page;
 			
 			// Include filter?
-			if ($page instanceof ContentPublish and $page->_context['page']) {
+			if ($page instanceof ContentPublish and $page->_context['page'] == 'index') {
 				$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/filters.css', 'screen', 92370001);
 				$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/jquery.js', 92370001);
 				$page->addScriptToHead(URL . '/symphony/extension/publishfiltering/filters/?section=' . $page->_context['section_handle'], 92370002);
