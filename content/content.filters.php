@@ -1,6 +1,7 @@
 <?php
 
 	require_once(TOOLKIT . '/class.administrationpage.php');
+	require_once(TOOLKIT . '/class.sectionmanager.php');
 	
 	class ContentExtensionPublishfilteringFilters extends AdministrationPage {
 		protected $_driver = null;
