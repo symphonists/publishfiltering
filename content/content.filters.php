@@ -25,7 +25,8 @@
 			
 			echo 'var filters = ', json_encode($fields), ";\n";
 			echo 'var filters_label = "', __('Filter With Selected...'), "\";\n";
-			echo 'var filters_button = "', __('Go'), "\";\n";
+			echo 'var filters_apply = "', __('Apply'), "\";\n";
+			echo 'var filters_clear = "', __('Clear'), "\";\n";
 			exit;
 		}
 	}

@@ -1,7 +1,7 @@
 Publish Filtering
 -------------------------------------------------------------------------------
 
-Version: 1.001
+Version: 1.002
 Author: Rowan Lewis <rowan@pixelcarnage.com>
 Build Date: 26 February 2009
 Requirements: Symphony 2.0.1

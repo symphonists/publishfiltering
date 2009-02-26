@@ -10,7 +10,7 @@
 		public function about() {
 			return array(
 				'name'			=> 'Publish Filtering',
-				'version'		=> '1.001',
+				'version'		=> '1.002',
 				'release-date'	=> '2009-02-26',
 				'author'		=> array(
 					'name'			=> 'Rowan Lewis',
