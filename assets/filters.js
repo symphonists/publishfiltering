@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var options = '';
+	var options = '<option value="">' + filters_label + '</option>';
 	
 	for (var item in filters) {
 		options = options + '<option value="' + filters[item] + '">' + item + '</option>';
@@ -7,8 +7,7 @@ $(document).ready(function() {
 	
 	$('h2').after('\
 		<form class="filters" method="POST" action="">\
-			' + filters_label + '\
-			<select class="field" name="field">' + options + '</select> = \
+			<select class="field" name="field">' + options + '</select>\
 			<input class="value" name="value" />\
 			<input type="submit" value="' + filters_button + '" />\
 		</form>\
@@ -16,11 +15,20 @@ $(document).ready(function() {
 	
 	$('.filters').submit(function() {
 		var self = $(this);
+		var field = self.find('.field').val();
+		var value = self.find('.value').val();
 		
-		self.attr(
-			'action', '?filter='
-			+ self.find('.field').val()
-			+ ':' + self.find('.value').val()
-		);
+		if (field && value) {
+			self.attr(
+				'action', '?filter='
+				+ field	+ ':' + value
+			);
+			return true;
+			
+		} else if (field || value) {
+			return false;
+		}
+		
+		self.attr('action', '?');
 	});
 });

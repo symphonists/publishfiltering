@@ -4,8 +4,11 @@
 	vertical-align: middle;
 }
 .filters .field,
-.filters .value {
+.filters input {
 	margin: 0 0.3em;
+}
+.filters .field {
+	margin-left: 0;
 }
 .filters .value {
 	width: 25em;
