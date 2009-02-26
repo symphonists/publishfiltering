@@ -1,0 +1,12 @@
+.filters {
+	margin: 0.5em 19px;
+	padding: 0;
+	vertical-align: middle;
+}
+.filters .field,
+.filters .value {
+	margin: 0 0.3em;
+}
+.filters .value {
+	width: 25em;
+}
