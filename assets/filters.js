@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var options = '<option value="">' + filters_label + '</option>';
-	var matches = location.href.match(/\?filter=(([^:]+):(.*))?/);
+	var matches = location.href.match(/filter=(([^:]+):(.*))?/);
 	var field = ''; var value = '';
 	
 	var regex = false;
