@@ -6,7 +6,7 @@ $(document).ready(function() {
 	var regex = false;
 	var regex_prefix = 'regexp';
 	var comparison_options = '';
-	var comparisons = ['is', 'contains'];
+	var comparisons = ['contains', 'is'];
 	
 	if (matches && matches[3] != undefined) {
 		field = unescape(matches[2]);
