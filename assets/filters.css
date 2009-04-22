@@ -12,4 +12,11 @@
 }
 .filters .value {
 	width: 25em;
+	margin: 0 0.3em 0 0.6em;
+}
+.filters input.apply {
+	margin-right: 0;
+}
+.filters input.clear {
+	margin-left: 0;
 }

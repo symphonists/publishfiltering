@@ -21,7 +21,41 @@
 			$fields = array();
 			
 			foreach ($section->fetchFilterableFields() as $field) {
-				$fields[$field->get('label')] = $field->get('element_name');
+				$fields[$field->get('label')]['handle'] = $field->get('element_name');
+				
+				$html = new XMLElement('html');
+				$field->displayPublishPanel($html);
+				
+				$dom = new DomDocument();
+				$dom->loadXML($html->generate());
+				
+				$xpath = new DomXPath($dom);
+				
+				$count = 0;
+				foreach($xpath->query("//*[name()='option'] | //*[name()='li']") as $option) {
+					
+					$value = '';
+					
+					if ($option->getAttribute('value')) {
+						$value = $option->getAttribute('value');
+					} else {
+						$value = $option->nodeValue;
+					}
+					
+					if ($value != '') {
+						$fields[$field->get('label')]['options'][$count]['label'] = $option->nodeValue;
+						$fields[$field->get('label')]['options'][$count]['value'] = $value;
+						$count++;
+					}
+					
+				}
+				
+				if ($field->get('type') == 'checkbox') {
+					$fields[$field->get('label')]['options'][] = 'Yes';
+					$fields[$field->get('label')]['options'][] = 'No';
+				}
+				
+				
 			}
 			
 			echo 'var filters = ', json_encode($fields), ";\n";
