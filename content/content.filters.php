@@ -27,7 +27,7 @@
 				$field->displayPublishPanel($html);
 				
 				$dom = new DomDocument();
-				$dom->loadXML($html->generate());
+				$dom->loadXML(str_replace('&','&amp;',$html->generate()));
 				
 				$xpath = new DomXPath($dom);
 				
