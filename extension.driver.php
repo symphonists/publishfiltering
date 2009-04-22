@@ -10,8 +10,8 @@
 		public function about() {
 			return array(
 				'name'			=> 'Publish Filtering',
-				'version'		=> '1.002',
-				'release-date'	=> '2009-02-26',
+				'version'		=> '1.003',
+				'release-date'	=> '2009-04-22',
 				'author'		=> array(
 					'name'			=> 'Rowan Lewis',
 					'website'		=> 'http://pixelcarnage.com/',
