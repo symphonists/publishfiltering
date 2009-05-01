@@ -10,12 +10,12 @@
 		public function about() {
 			return array(
 				'name'			=> 'Publish Filtering',
-				'version'		=> '1.003',
+				'version'		=> '1.004',
 				'release-date'	=> '2009-04-22',
 				'author'		=> array(
-					'name'			=> 'Rowan Lewis',
-					'website'		=> 'http://pixelcarnage.com/',
-					'email'			=> 'rowan@pixelcarnage.com'
+					'name'			=> 'Nick Dunn',
+					'website'		=> 'http://airlock.com',
+					'email'			=> 'nick.dunn@airlock.com'
 				),
 				'description'	=> 'Add a filter box to publish index pages.'
 			);
