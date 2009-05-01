@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var options = '<option value="">' + filters_label + '</option>';
+	var options = '';
 	var matches = location.href.match(/\?filter=(([^:]+):(.*))?/);
 	var field = ''; var value = '';
 	
@@ -35,12 +35,13 @@ $(document).ready(function() {
 		var selected = '';
 		
 		if (comparisons[i] == 'contains' && regex) selected = ' selected="selected"';
-		if (comparisons[i] != 'contains' && !regex) selected = ' selected="selected"';
+		if (comparisons[i] == 'is' && !regex && value) selected = ' selected="selected"';
 		
 		comparison_options += '<option' + selected + '>' + comparisons[i] + '</option>';
 	}
 	
 	function buildValueControl() {
+		
 		if (selected_field && selected_field.options) {
 			
 			$('.filters select.match').val('is');
@@ -110,4 +111,19 @@ $(document).ready(function() {
 		
 		return false;
 	});
+	
+	var pagination = $('ul.page');
+	var count = 0;
+	if (pagination.length) {
+		var title = pagination.find("li[title~='Viewing']").attr('title');
+		count = parseInt(title.split('of')[1].replace(/^\s+|\s+$/g,''));
+	} else {
+		count = $('tbody tr').length;
+	}
+	
+	var h2 = document.getElementsByTagName('h2')[0];
+	var index = 1;
+	if (h2.childNodes[0].nodeType == 3) index = 0;
+	h2.childNodes[index].nodeValue += ' (' + count + ' entr' +  ((count == 1) ? 'y' : 'ies') + ')';
+	
 });
