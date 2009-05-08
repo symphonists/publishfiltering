@@ -1,7 +1,8 @@
 .filters {
-	margin: 0;
-	padding: 0.5em 19px;
-	vertical-align: middle;
+    margin: 1em 0 0 0;
+    padding: 1em 19px;
+	background-color: #f5f5f4;
+    vertical-align: middle;
 }
 .filters .field,
 .filters input {
