@@ -118,7 +118,9 @@ $(document).ready(function() {
 		var title = pagination.find("li[title~='Viewing']").attr('title');
 		count = parseInt(title.split('of')[1].replace(/^\s+|\s+$/g,''));
 	} else {
-		count = $('tbody tr').length;
+		// if there are no entries, there will be one row but its first td will be inactive
+		// so we count all *but* this instance
+		count = $('tbody tr:not(:has(td:first.inactive))').length;
 	}
 	
 	var h2 = document.getElementsByTagName('h2')[0];
