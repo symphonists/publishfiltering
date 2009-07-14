@@ -1,4 +1,4 @@
-$(document).ready(function() {
+jQuery(document).ready(function() {
 	var options = '';
 	var matches = location.href.match(/\?filter=(([^:]+):(.*))?/);
 	var field = ''; var value = '';
@@ -44,7 +44,7 @@ $(document).ready(function() {
 		
 		if (selected_field && selected_field.options) {
 			
-			$('.filters select.match').val('is');
+			jQuery('.filters select.match').val('is');
 			
 			var select = '<select name="value" class="value">';
 			
@@ -62,13 +62,13 @@ $(document).ready(function() {
 			return select;
 			
 		} else {
-			$('.filters select.match').val('contains');
+			jQuery('.filters select.match').val('contains');
 			return '<input class="value" name="value" value="' + value + '" />';
 		}
 		
 	}
 	
-	$('h2').after('\
+	jQuery('h2').after('\
 		<form class="filters" method="POST" action="">\
 			<select class="field" name="field">' + options + '</select>\
 			<select class="match" name="match">' + comparison_options + '</select>' + buildValueControl() + '<input class="apply" type="submit" value="' + filters_apply + '" />\
@@ -76,29 +76,29 @@ $(document).ready(function() {
 		</form>\
 	');
 	
-	$('.filters select').change(function() {
-		$('.filters .value').focus();
+	jQuery('.filters select').change(function() {
+		jQuery('.filters .value').focus();
 	});
 	
-	$('.filters select.field').change(function() {
-		var value = $(this).attr('value');
+	jQuery('.filters select.field').change(function() {
+		var value = jQuery(this).attr('value');
 		for(var item in filters) {
 			if (value == filters[item].handle) selected_field = filters[item];
 		}
 		
-		$('.filters .value').remove();
-		$('.filters .match').after(buildValueControl());
-		$('.filters .value').focus();
+		jQuery('.filters .value').remove();
+		jQuery('.filters .match').after(buildValueControl());
+		jQuery('.filters .value').focus();
 	});
 	
-	$('.filters .clear').click(function() {
+	jQuery('.filters .clear').click(function() {
 		location.href = location.href.replace(/\?.*/, '');
 		
 		return false;
 	});
 	
-	$('.filters').submit(function() {
-		var self = $(this);
+	jQuery('.filters').submit(function() {
+		var self = jQuery(this);
 		var field = self.find('.field').val();
 		var value = self.find('.value').val();
 
@@ -112,15 +112,15 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	var pagination = $('ul.page');
+	var pagination = jQuery('ul.page');
 	var count = 0;
 	if (pagination.length) {
 		var title = pagination.find("li[title~='Viewing']").attr('title');
-		count = parseInt(title.split('of')[1].replace(/^\s+|\s+$/g,''));
+		count = parseInt(title.split('of')[1].replace(/^\s+|\s+jQuery/g,''));
 	} else {
 		// if there are no entries, there will be one row but its first td will be inactive
 		// so we count all *but* this instance
-		count = $('tbody tr:not(:has(td:first.inactive))').length;
+		count = jQuery('tbody tr:not(:has(td:first.inactive))').length;
 	}
 	
 	var h2 = document.getElementsByTagName('h2')[0];

@@ -10,8 +10,8 @@
 		public function about() {
 			return array(
 				'name'			=> 'Publish Filtering',
-				'version'		=> '1.004',
-				'release-date'	=> '2009-04-22',
+				'version'		=> '1.2',
+				'release-date'	=> '2009-07-14',
 				'author'		=> array(
 					'name'			=> 'Nick Dunn',
 					'website'		=> 'http://airlock.com',
@@ -41,7 +41,6 @@
 			// Include filter?
 			if ($page instanceof ContentPublish and $page->_context['page'] == 'index') {
 				$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/filters.css', 'screen', 92370001);
-				$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/jquery.js', 92370001);
 				$page->addScriptToHead(URL . '/symphony/extension/publishfiltering/filters/?section=' . $page->_context['section_handle'], 92370002);
 				$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/filters.js', 92370003);
 			}
