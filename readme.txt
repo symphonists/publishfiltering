@@ -1,9 +1,9 @@
 Publish Filtering
 -------------------------------------------------------------------------------
 
-Version: 1.2
+Version: 1.3
 Author: Nick Dunn <nick.dunn@airlock.com> (Originally by Rowan Lewis <rowan@pixelcarnage.com>)
-Build Date: 2009-07-14
+Build Date: 2009-07-26
 Requirements: Symphony 2.0.3
 
 
