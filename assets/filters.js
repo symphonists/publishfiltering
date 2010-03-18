@@ -115,12 +115,14 @@ jQuery(document).ready(function() {
 	var pagination = jQuery('ul.page');
 	var count = 0;
 	if (pagination.length) {
-		var title = pagination.find("li[title~='Viewing']").attr('title');
-		count = parseInt(title.split('of')[1].replace(/^\s+|\s+jQuery/g,''));
+		var title = pagination.find("li[title]").attr('title');
+		var digits = title.match(/[0-9]+/g);
+		count = digits[digits.length - 1];
 	} else {
 		// if there are no entries, there will be one row but its first td will be inactive
-		// so we count all *but* this instance
-		count = jQuery('tbody tr:not(:has(td:first.inactive))').length;
+		jQuery('tbody tr').each(function() {
+			if (!jQuery('td:first', this).hasClass('inactive')) count++;
+		});
 	}
 	
 	var h2 = document.getElementsByTagName('h2')[0];
