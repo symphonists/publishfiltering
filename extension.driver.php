@@ -10,8 +10,8 @@
 		public function about() {
 			return array(
 				'name'			=> 'Publish Filtering',
-				'version'		=> '1.2',
-				'release-date'	=> '2009-07-14',
+				'version'		=> '1.3',
+				'release-date'	=> '2009-07-26',
 				'author'		=> array(
 					'name'			=> 'Nick Dunn',
 					'website'		=> 'http://airlock.com',
