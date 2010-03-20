@@ -2,7 +2,7 @@
 
 * Version: 1.3  
 * Authors: Nick Dunn <nick.dunn@airlock.com> (Originally by Rowan Lewis <rowan@pixelcarnage.com>)  
-* Build Date: 2010-03-18  
+* Build Date: 2010-03-20  
 * Requirements: Symphony 2.0.6
 
 
