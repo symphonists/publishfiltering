@@ -1,4 +1,14 @@
 jQuery(document).ready(function() {
+
+	Symphony.Language.add({
+		'contains': false,
+		'is': false,
+		'Apply': false,
+		'Clear': false,
+		'entry': false,
+		'entries': false,
+	});
+
 	var options = '';
 	var matches = location.href.match(/\?filter=(([^:]+):(.*))?/);
 	var field = ''; var value = '';
@@ -6,7 +16,7 @@ jQuery(document).ready(function() {
 	var regex = false;
 	var regex_prefix = 'regexp';
 	var comparison_options = '';
-	var comparisons = ['contains', 'is'];
+	var comparisons = [Symphony.Language.get('contains'), Symphony.Language.get('is')];
 	
 	var selected_field = null;
 	
@@ -34,8 +44,8 @@ jQuery(document).ready(function() {
 	for (var i = 0; i < comparisons.length; i++) {
 		var selected = '';
 		
-		if (comparisons[i] == 'contains' && regex) selected = ' selected="selected"';
-		if (comparisons[i] == 'is' && !regex && value) selected = ' selected="selected"';
+		if (comparisons[i] == Symphony.Language.get('contains') && regex) selected = ' selected="selected"';
+		if (comparisons[i] == Symphony.Language.get('is') && !regex && value) selected = ' selected="selected"';
 		
 		comparison_options += '<option' + selected + '>' + comparisons[i] + '</option>';
 	}
@@ -44,7 +54,7 @@ jQuery(document).ready(function() {
 		
 		if (selected_field && selected_field.options) {
 			
-			jQuery('.filters select.match').val('is');
+			jQuery('.filters select.match').val(Symphony.Language.get('is'));
 			
 			var select = '<select name="value" class="value">';
 			
@@ -62,7 +72,7 @@ jQuery(document).ready(function() {
 			return select;
 			
 		} else {
-			jQuery('.filters select.match').val('contains');
+			jQuery('.filters select.match').val(Symphony.Language.get('contains'));
 			return '<input class="value" name="value" value="' + value + '" />';
 		}
 		
@@ -104,7 +114,7 @@ jQuery(document).ready(function() {
 
 		if (field && value) {
 			var href = '?filter=' + encodeURI(field) + ':';
-			if (self.find('.match').val() == 'contains') href += regex_prefix + ':';
+			if (self.find('.match').val() == Symphony.Language.get('contains')) href += regex_prefix + ':';
 			href += encodeURI(value);
 			location.href = href;
 		}
@@ -128,6 +138,6 @@ jQuery(document).ready(function() {
 	var h2 = document.getElementsByTagName('h2')[0];
 	var index = 1;
 	if (h2.childNodes[0].nodeType == 3) index = 0;
-	h2.childNodes[index].nodeValue += ' (' + count + ' entr' +  ((count == 1) ? 'y' : 'ies') + ')';
+	h2.childNodes[index].nodeValue += ' (' + count + ' ' +  ((count == 1) ? Symphony.Language.get('entry') : Symphony.Language.get('entries')) + ')';
 	
 });
