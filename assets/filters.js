@@ -78,7 +78,7 @@ jQuery(document).ready(function() {
 		
 	}
 	
-	jQuery('h2').after('\
+	jQuery('form > h2').after('\
 		<form class="filters" method="POST" action="">\
 			<select class="field" name="field">' + options + '</select>\
 			<select class="match" name="match">' + comparison_options + '</select>' + buildValueControl() + '<input class="apply" type="submit" value="' + filters_apply + '" />\
@@ -135,7 +135,7 @@ jQuery(document).ready(function() {
 		});
 	}
 	
-	var h2 = document.getElementsByTagName('h2')[0];
+	var h2 =jQuery('form > h2')[0];
 	var index = 1;
 	if (h2.childNodes[0].nodeType == 3) index = 0;
 	h2.childNodes[index].nodeValue += ' (' + count + ' ' +  ((count == 1) ? Symphony.Language.get('entry') : Symphony.Language.get('entries')) + ')';
