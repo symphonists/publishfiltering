@@ -7,11 +7,13 @@
 	
 	class ContentExtensionPublishfilteringFilters extends AdministrationPage {
 		protected $_driver = null;
+		protected $_incompatible_publishpanel = null;
 		
 		public function __construct(&$parent){
 			parent::__construct($parent);
 			
 			$this->_driver = $this->_Parent->ExtensionManager->create('publishfiltering');
+			$this->_incompatible_publishpanel = array('mediathek', 'imagecropper', 'readonlyinput');
 		}
 		
 		public function __viewIndex() {
@@ -23,6 +25,8 @@
 			$fields = array();
 			
 			foreach ($section->fetchFilterableFields() as $field) {
+				if (in_array($field->get('type'), $this->_incompatible_publishpanel)) continue;
+
 				$fields[$field->get('label')]['handle'] = $field->get('element_name');
 				
 				$html = new XMLElement('html');
