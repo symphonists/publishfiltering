@@ -10,12 +10,11 @@
 		public function about() {
 			return array(
 				'name'			=> 'Publish Filtering',
-				'version'		=> '1.4',
-				'release-date'	=> '2010-03-20',
+				'version'		=> '1.4.1',
+				'release-date'	=> '2010-08-30',
 				'author'		=> array(
 					'name'			=> 'Nick Dunn',
-					'website'		=> 'http://airlock.com',
-					'email'			=> 'nick.dunn@airlock.com'
+					'website'		=> 'http://airlock.com'
 				),
 				'description'	=> 'Add a filter box to publish index pages.'
 			);

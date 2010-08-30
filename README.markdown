@@ -1,8 +1,8 @@
 # Publish Filtering
 
-* Version: 1.4  
-* Authors: Nick Dunn <nick.dunn@airlock.com> (Originally by Rowan Lewis <rowan@pixelcarnage.com>)  
-* Build Date: 2010-03-20  
+* Version: 1.4.1  
+* Authors: Nick Dunn (http://nick-dunn.co.uk) (Originally by Rowan Lewis <rowan@pixelcarnage.com>)  
+* Build Date: 2010-08-30  
 * Requirements: Symphony 2.0.6
 
 
