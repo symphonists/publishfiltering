@@ -1,26 +1,35 @@
-.filters {
-    margin: 0.5em 0 1.75em 0;
-    padding: 1em 19px;
+form.filters {
+    margin: 0 -17px 1.75em -17px;
+    padding: 0.5em 16px 1em 16px;
     vertical-align: middle;
     border-bottom: 1px solid #e6e6e5;
 	-moz-box-shadow: 0 3px 8px #f5f5f4;
 	-webkit-box-shadow: 0 3px 8px #f5f5f4;
 }
-.filters .field,
-.filters input {
+form.filters select {
+	width: auto;
+	display: inline-block;
+}
+form.filters .field,
+form.filters input {
 	margin: 0 0.3em;
 	padding: 0.1em;
+	display: inline-block;
 }
-.filters .field {
+form.filters .field {
 	margin-left: 0;
 }
-.filters .value {
+form.filters .value {
 	width: 25em;
 	margin: 0 0.3em 0 0.6em;
 }
-.filters input.apply {
-	margin-right: 0;
+form.filters input.apply {
+	margin-right: 4px;
 }
-.filters input.clear {
-	margin-left: 0;
+form.filters button.clear {
+	padding: 0;
+	background: none;
+	border: none;
+	color: #aaa;
+	cursor: pointer;
 }

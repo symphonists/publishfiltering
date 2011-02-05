@@ -1,13 +1,13 @@
-jQuery(document).ready(function() {
+Symphony.Language.add({
+	'contains': false,
+	'is': false,
+	'Filter': false,
+	'Clear filters': false,
+	'entry': false,
+	'entries': false,
+});
 
-	Symphony.Language.add({
-		'contains': false,
-		'is': false,
-		'Apply': false,
-		'Clear': false,
-		'entry': false,
-		'entries': false,
-	});
+jQuery(document).ready(function() {
 
 	var options = '';
 	var matches = location.href.match(/\?filter=(([^:]+):(.*))?/);
@@ -78,11 +78,11 @@ jQuery(document).ready(function() {
 		
 	}
 	
-	jQuery('form > h2').after('\
+	jQuery('.wrapper > .contents > h2').after('\
 		<form class="filters" method="POST" action="">\
 			<select class="field" name="field">' + options + '</select>\
-			<select class="match" name="match">' + comparison_options + '</select>' + buildValueControl() + '<input class="apply" type="submit" value="' + filters_apply + '" />\
-			<input class="clear" type="button" value="' + filters_clear + '" />\
+			<select class="match" name="match">' + comparison_options + '</select>' + buildValueControl() + '<input class="apply" type="submit" value="' + Symphony.Language.get("Filter") + '" />\
+			<button class="clear"><span>' + Symphony.Language.get("Clear filters") + '</span></button>\
 		</form>\
 	');
 	
@@ -135,9 +135,8 @@ jQuery(document).ready(function() {
 		});
 	}
 	
-	var h2 =jQuery('form > h2')[0];
-	var index = 1;
-	if (h2.childNodes[0].nodeType == 3) index = 0;
-	h2.childNodes[index].nodeValue += ' (' + count + ' ' +  ((count == 1) ? Symphony.Language.get('entry') : Symphony.Language.get('entries')) + ')';
+	var h2 =jQuery('.contents > h2 > span');
+	var h2_text = h2.text();
+	h2.text(h2_text += ' (' + count + ' ' +  ((count == 1) ? Symphony.Language.get('entry') : Symphony.Language.get('entries')) + ')');
 	
 });

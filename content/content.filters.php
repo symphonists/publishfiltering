@@ -17,9 +17,8 @@
 		}
 		
 		public function __viewIndex() {
-			header('content-type: text/javascript');
 			
-			$sm = new SectionManager($this->_Parent);
+			$sm = new SectionManager(Symphony::Engine());
 			$section_id = $sm->fetchIDFromHandle($_GET['section']);
 			$section = $sm->fetch($section_id);
 			$fields = array();
@@ -64,10 +63,8 @@
 				
 			}
 			
+			header('content-type: text/javascript');
 			echo 'var filters = ', json_encode($fields), ";\n";
-			echo "var filters_label = \"\";\n";
-			echo 'var filters_apply = "', __('Apply'), "\";\n";
-			echo 'var filters_clear = "', __('Clear'), "\";\n";
 			exit;
 		}
 	}
