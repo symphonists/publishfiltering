@@ -13,6 +13,8 @@ jQuery(document).ready(function() {
 	var matches = location.href.match(/\?filter=(([^:]+):(.*))?/);
 	var field = ''; var value = '';
 	
+	var filters = Symphony.Context.get('publish-filtering')
+	
 	var regex = false;
 	var regex_prefix = 'regexp';
 	var comparison_options = '';
@@ -135,7 +137,7 @@ jQuery(document).ready(function() {
 		});
 	}
 	
-	var h2 =jQuery('.contents > h2 > span');
+	var h2 =jQuery('#contents > h2 > span:first');
 	var h2_text = h2.text();
 	h2.text(h2_text += ' (' + count + ' ' +  ((count == 1) ? Symphony.Language.get('entry') : Symphony.Language.get('entries')) + ')');
 	

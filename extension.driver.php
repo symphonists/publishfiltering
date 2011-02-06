@@ -5,7 +5,7 @@
 		Extension definition
 	-------------------------------------------------------------------------*/
 		
-		public static $params = null;
+		private $_incompatible_publishpanel = array('mediathek', 'imagecropper', 'readonlyinput');
 		
 		public function about() {
 			return array(
@@ -39,8 +39,58 @@
 			
 			// Include filter?
 			if ($page instanceof ContentPublish and $page->_context['page'] == 'index') {
+				
+				$sm = new SectionManager(Symphony::Engine());
+				$section_id = $sm->fetchIDFromHandle($page->_context['section_handle']);
+				$section = $sm->fetch($section_id);
+				$fields = array();
+
+				foreach ($section->fetchFilterableFields() as $field) {
+					if (in_array($field->get('type'), $this->_incompatible_publishpanel)) continue;
+
+					$fields[$field->get('label')]['handle'] = General::sanitize($field->get('element_name'));
+
+					$html = new XMLElement('html');
+					$field->displayPublishPanel($html);
+
+					$dom = new DomDocument();
+					$dom->loadXML($html->generate());
+
+					$xpath = new DomXPath($dom);
+
+					$count = 0;
+					foreach($xpath->query("//*[name()='option'] | //*[name()='li']") as $option) {
+
+						$value = '';
+
+						if ($option->getAttribute('value')) {
+							$value = $option->getAttribute('value');
+						} else {
+							$value = $option->nodeValue;
+						}
+
+						if ($value != '') {
+							$fields[$field->get('label')]['options'][$count]['label'] = $option->nodeValue;
+							$fields[$field->get('label')]['options'][$count]['value'] = $value;
+							$count++;
+						}
+
+					}
+
+					if ($field->get('type') == 'checkbox') {
+						$fields[$field->get('label')]['options'][] = 'Yes';
+						$fields[$field->get('label')]['options'][] = 'No';
+					}
+
+				}
+				
+				$page->addElementToHead(new XMLElement(
+					'script',
+					"Symphony.Context.add('publish-filtering', " . json_encode($fields) . ")",
+					array('type' => 'text/javascript')
+				), 987654321);
+				
 				$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/filters.css', 'screen', 92370001);
-				$page->addScriptToHead(URL . '/symphony/extension/publishfiltering/filters/?section=' . $page->_context['section_handle'], 92370002);
 				$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/filters.js', 92370003);
 			}
 			
