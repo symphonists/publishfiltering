@@ -86,12 +86,12 @@
 				
 				$page->addElementToHead(new XMLElement(
 					'script',
-					"Symphony.Context.add('publish-filtering', " . json_encode($fields) . ")",
+					"Symphony.Context.add('publishfiltering', " . json_encode($fields) . ")",
 					array('type' => 'text/javascript')
-				), 987654321);
+				), 92370001);
 				
-				$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/filters.css', 'screen', 92370001);
-				$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/filters.js', 92370003);
+				$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.css', 'screen', 92370002);
+				$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.js', 92370003);
 			}
 			
 		}

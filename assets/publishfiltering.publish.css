@@ -1,4 +1,9 @@
-form.filters {
+h2 span.publishfiltering {
+	color: #887;
+	margin-left: 5px;
+}
+
+form.publishfiltering {
     margin: 0 -17px 1.75em -17px;
     padding: 0.5em 16px 1em 16px;
     vertical-align: middle;
@@ -6,27 +11,27 @@ form.filters {
 	-moz-box-shadow: 0 3px 8px #f5f5f4;
 	-webkit-box-shadow: 0 3px 8px #f5f5f4;
 }
-form.filters select {
+form.publishfiltering select {
 	width: auto;
 	display: inline-block;
 }
-form.filters .field,
-form.filters input {
+form.publishfiltering .field,
+form.publishfiltering input {
 	margin: 0 0.3em;
 	padding: 0.1em;
 	display: inline-block;
 }
-form.filters .field {
+form.publishfiltering .field {
 	margin-left: 0;
 }
-form.filters .value {
+form.publishfiltering .value {
 	width: 25em;
 	margin: 0 0.3em 0 0.6em;
 }
-form.filters input.apply {
+form.publishfiltering input.apply {
 	margin-right: 4px;
 }
-form.filters button.clear {
+form.publishfiltering button.clear {
 	padding: 0;
 	background: none;
 	border: none;
