@@ -7,30 +7,30 @@
 			'email' => 'post@nilshoerrmann.de',
 			'website' => 'http://www.nilshoerrmann.de'
 		),
-		'release-date' => '2010-03-19'
+		'release-date' => '2011-02-15'
 	);
-	
-	
-	/*
-	 * EXTENSION: Publish Filtering
-	 * Localisation strings
-	 */
 
+	/**
+	 * Publish Filtering
+	 */
 	$dictionary = array(
-	
-		'Clear' =>
-		'Löschen',
-		
-		'contains' =>
+
+		'contains' => 
 		'enthält',
-		
-		'is' =>
-		'entspricht',
-		
-		'entry' =>
+
+		'entries' => 
+		'Einträge',
+
+		'entry' => 
 		'Eintrag',
-		
-		'entries' =>
-		'Einträge'
+
+		'is' => 
+		'entspricht',
+
+		'Filter' => 
+		'Filtern',
+
+		'Clear filters' => 
+		'Filter löschen',
 
 	);
