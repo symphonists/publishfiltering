@@ -1,6 +1,7 @@
 <?php
 	
 	class Extension_PublishFiltering extends Extension {
+	
 	/*-------------------------------------------------------------------------
 		Extension definition
 	-------------------------------------------------------------------------*/
@@ -10,8 +11,8 @@
 		public function about() {
 			return array(
 				'name'			=> 'Publish Filtering',
-				'version'		=> '1.5.0',
-				'release-date'	=> '2011-02-07',
+				'version'		=> '1.6',
+				'release-date'	=> '2011-03-17',
 				'author'		=> array(
 					'name'			=> 'Nick Dunn',
 					'website'		=> 'http://airlock.com'
@@ -26,14 +27,67 @@
 					'page'		=> '/backend/',
 					'delegate'	=> 'InitaliseAdminPageHead',
 					'callback'	=> 'initaliseAdminPageHead'
+				),
+				array(
+					'page'		=> '/blueprints/sections/',
+					'delegate'	=> 'AddSectionElements',
+					'callback'	=> 'addSectionSetting'
+				),
+				array(
+					'page'		=> '/blueprints/sections/',
+					'delegate'	=> 'SectionPreCreate',
+					'callback'	=> 'saveSectionSettings'
+				),
+				array(
+					'page'		=> '/blueprints/sections/',
+					'delegate'	=> 'SectionPreEdit',
+					'callback'	=> 'saveSectionSettings'
 				)
 			);
 		}
 		
 	/*-------------------------------------------------------------------------
-		Delegates:
+		Delegates
 	-------------------------------------------------------------------------*/
+	
+		/**
+		 * Add setting to the section editor head to enable publish filtering
+		 * for this section. Defaults to 'yes'.
+		 */		
+		public function addSectionSetting($context) {
 		
+			// Get current setting
+			$setting = array();
+			if($context['meta']['filterable'] == 'no') {
+				$setting = array('checked' => 'checked');
+			}
+
+			// Prepare setting
+			$label = new XMLElement('label');
+			$checkbox = new XMLElement('input', ' ' . __('Disable publish filtering for this section'), array_merge($setting, array('name' => 'meta[filterable]', 'type' => 'checkbox', 'value' => 'no')));
+			$label->appendChild($checkbox);
+			
+			// Find context
+			$fieldset = $context['form']->getChildren();
+			$group = $fieldset[0]->getChildren();
+			$column = $group[1]->getChildren();
+			
+			// Append setting
+			$column[0]->appendChild($label);
+		}
+		
+		/**
+		 * If a section should be filterable, make sure 'filterable' is set to 'yes'
+		 */
+		public function saveSectionSettings($context) {
+			if(!$context['meta']['filterable']) {
+				$context['meta']['filterable'] = 'yes';
+			}
+		}
+		
+		/**
+		 * Add publish filter
+		 */
 		public function initaliseAdminPageHead($context) {
 			$page = $context['parent']->Page;
 			
@@ -44,57 +98,77 @@
 				$section_id = $sm->fetchIDFromHandle($page->_context['section_handle']);
 				$section = $sm->fetch($section_id);
 				$fields = array();
-
-				foreach ($section->fetchFilterableFields() as $field) {
-					if (in_array($field->get('type'), $this->_incompatible_publishpanel)) continue;
-
-					$fields[$field->get('label')]['handle'] = General::sanitize($field->get('element_name'));
-
-					$html = new XMLElement('html');
-					$field->displayPublishPanel($html);
-
-					$dom = new DomDocument();
-					$dom->loadXML($html->generate());
-
-					$xpath = new DomXPath($dom);
-
-					$count = 0;
-					foreach($xpath->query("//*[name()='option'] | //*[name()='li']") as $option) {
-
-						$value = '';
-
-						if ($option->getAttribute('value')) {
-							$value = $option->getAttribute('value');
-						} else {
-							$value = $option->nodeValue;
+				
+				// Section is filterable
+				if($section->get('filterable') == 'yes') {
+					foreach ($section->fetchFilterableFields() as $field) {
+						if (in_array($field->get('type'), $this->_incompatible_publishpanel)) continue;
+	
+						$fields[$field->get('label')]['handle'] = General::sanitize($field->get('element_name'));
+	
+						$html = new XMLElement('html');
+						$field->displayPublishPanel($html);
+	
+						$dom = new DomDocument();
+						$dom->loadXML($html->generate());
+	
+						$xpath = new DomXPath($dom);
+	
+						$count = 0;
+						foreach($xpath->query("//*[name()='option'] | //*[name()='li']") as $option) {
+	
+							$value = '';
+	
+							if ($option->getAttribute('value')) {
+								$value = $option->getAttribute('value');
+							} else {
+								$value = $option->nodeValue;
+							}
+	
+							if ($value != '') {
+								$fields[$field->get('label')]['options'][$count]['label'] = $option->nodeValue;
+								$fields[$field->get('label')]['options'][$count]['value'] = $value;
+								$count++;
+							}
+	
 						}
-
-						if ($value != '') {
-							$fields[$field->get('label')]['options'][$count]['label'] = $option->nodeValue;
-							$fields[$field->get('label')]['options'][$count]['value'] = $value;
-							$count++;
+	
+						if ($field->get('type') == 'checkbox') {
+							$fields[$field->get('label')]['options'][] = 'Yes';
+							$fields[$field->get('label')]['options'][] = 'No';
 						}
-
+	
 					}
-
-					if ($field->get('type') == 'checkbox') {
-						$fields[$field->get('label')]['options'][] = 'Yes';
-						$fields[$field->get('label')]['options'][] = 'No';
-					}
-
+					
+					$page->addElementToHead(new XMLElement(
+						'script',
+						"Symphony.Context.add('publishfiltering', " . json_encode($fields) . ")",
+						array('type' => 'text/javascript')
+					), 92370001);
+					
+					$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.css', 'screen', 92370002);
+					$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.js', 92370003);
 				}
-				
-				$page->addElementToHead(new XMLElement(
-					'script',
-					"Symphony.Context.add('publishfiltering', " . json_encode($fields) . ")",
-					array('type' => 'text/javascript')
-				), 92370001);
-				
-				$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.css', 'screen', 92370002);
-				$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.js', 92370003);
 			}
 			
 		}
+		
+	/*-----------------------------------------------------------------------*/
+		
+		public function install() {
+			return Administration::instance()->Database->query("ALTER TABLE `tbl_sections` ADD `filterable` enum('yes','no') NOT NULL DEFAULT 'yes'");
+		}
+		
+		public function update($previousVersion) {
+			if(version_compare($previousVersion, '1.6', '<')) {
+				$this->install();
+			}
+		}
+
+		public function uninstall() {
+			return Administration::instance()->Database->query("ALTER TABLE `tbl_sections` DROP `filterable`");
+		}
+				
 	}
 	
 ?>
