@@ -32,11 +32,8 @@
 
 		'Clear filters' => 
 		'Filter löschen',
-<<<<<<< HEAD
 		
 		'Disable publish filtering for this section' =>
 		'Suchfilter für diesen Bereich deaktivieren'
-=======
->>>>>>> nilshoerrmann/master
 
 	);
