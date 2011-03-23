@@ -96,6 +96,9 @@
 				
 				$sm = new SectionManager(Symphony::Engine());
 				$section_id = $sm->fetchIDFromHandle($page->_context['section_handle']);
+				
+				if(!$section_id) return;
+				
 				$section = $sm->fetch($section_id);
 				$fields = array();
 				
