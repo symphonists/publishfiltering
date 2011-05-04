@@ -64,8 +64,10 @@
 
 			// Prepare setting
 			$label = new XMLElement('label');
-			$checkbox = new XMLElement('input', ' ' . __('Disable publish filtering for this section'), array_merge($setting, array('name' => 'meta[filterable]', 'type' => 'checkbox', 'value' => 'no')));
-			$label->appendChild($checkbox);
+			$checkbox = new XMLElement('input', null, array_merge($setting, array('name' => 'meta[filterable]', 'type' => 'checkbox', 'value' => 'no')));
+			$label->setValue(__('%s Disable publish filtering for this section', array(
+				$checkbox->generate()
+			)));
 			
 			// Find context
 			$fieldset = $context['form']->getChildren();
@@ -111,9 +113,14 @@
 	
 						$html = new XMLElement('html');
 						$field->displayPublishPanel($html);
-	
+						
+						$html = preg_replace(
+							'/&(?!(#[0-9]+|#x[0-9a-f]+|amp|lt|gt);)/i', '&amp;',
+							$html->generate()
+						);
+						
 						$dom = new DomDocument();
-						$dom->loadXML($html->generate());
+						$dom->loadXML($html);
 	
 						$xpath = new DomXPath($dom);
 	
