@@ -112,15 +112,31 @@
 						$fields[$field->get('label')]['handle'] = General::sanitize($field->get('element_name'));
 	
 						$html = new XMLElement('html');
-						$field->displayPublishPanel($html);
 						
+						/*
+							fields can choose to use getDefaultPublishContent to return a list values only,
+							if their displayPublishPanel HTML is complex
+							https://github.com/nickdunn/publishfiltering/issues/4
+						*/
+						if(method_exists($field, 'getDefaultPublishContent')) {
+							$field->getDefaultPublishContent($html);
+						} else {
+							$field->displayPublishPanel($html);
+						}
+						
+						// filter out some HTML nasties
 						$html = preg_replace(
 							'/&(?!(#[0-9]+|#x[0-9a-f]+|amp|lt|gt);)/i', '&amp;',
 							$html->generate()
 						);
 						
 						$dom = new DomDocument();
+						
+						libxml_use_internal_errors(true);
 						$dom->loadXML($html);
+						$xml_errors = libxml_get_errors();
+						// XML is malformed, skip this field :-(
+				        if (!empty($xml_errors)) continue;
 	
 						$xpath = new DomXPath($dom);
 	
