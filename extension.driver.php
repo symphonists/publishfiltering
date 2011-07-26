@@ -108,8 +108,13 @@
 				if($section->get('filterable') == 'yes') {
 					foreach ($section->fetchFilterableFields() as $field) {
 						if (in_array($field->get('type'), $this->_incompatible_publishpanel)) continue;
-	
-						$fields[$field->get('label')]['handle'] = General::sanitize($field->get('element_name'));
+						
+						$field_info = array(
+							'label' => General::sanitize($field->get('label')),
+							'handle' => General::sanitize($field->get('element_name')),
+							'type' => General::sanitize($field->get('type')),
+							'options' => array()
+						);
 	
 						$html = new XMLElement('html');
 						
@@ -152,23 +157,41 @@
 							}
 	
 							if ($value != '') {
-								$fields[$field->get('label')]['options'][$count]['label'] = $option->nodeValue;
-								$fields[$field->get('label')]['options'][$count]['value'] = $value;
+								$field_info['options'][$count]['label'] = $option->nodeValue;
+								$field_info['options'][$count]['value'] = $value;
 								$count++;
 							}
 	
 						}
 	
 						if ($field->get('type') == 'checkbox') {
-							$fields[$field->get('label')]['options'][] = 'Yes';
-							$fields[$field->get('label')]['options'][] = 'No';
+							$field_info['options'][] = 'Yes';
+							$field_info['options'][] = 'No';
 						}
+						
+						$fields[] = $field_info;
 	
+					}
+					
+					$url_filters = (isset($_REQUEST['filter'])) ? $_REQUEST['filter'] : array();
+					if(!is_array($url_filters)) $url_filters = array($url_filters);
+					$filters = array();
+					foreach($url_filters as $handle => $value) {
+						$value = rawurldecode($value);
+						list($prefix, $value) = explode(':', $value, 2);
+						$filters[] = array(
+							'handle' => $handle,
+							'value' => (!$value) ? $prefix : $value,
+							'prefix' => (!$value) ? NULL : $prefix,
+						);
 					}
 					
 					$page->addElementToHead(new XMLElement(
 						'script',
-						"Symphony.Context.add('publishfiltering', " . json_encode($fields) . ")",
+						"Symphony.Context.add('publishfiltering', " . json_encode(array(
+							'fields' => $fields,
+							'filters' => $filters
+						)) . ")",
 						array('type' => 'text/javascript')
 					), 92370001);
 					
