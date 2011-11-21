@@ -136,7 +136,7 @@ var PublishTabs = {
 		}
 
 		var h2 = jQuery('h2 > span:first');
-		h2.after('<span class="publishfiltering inactive">' + count + ' ' +  ((count == 1) ? Symphony.Language.get('entry') : Symphony.Language.get('entries')) + '</span>');
+		h2.after('<span class="publishfiltering inactive">' + (count - 1) + ' ' +  ((count == 1) ? Symphony.Language.get('entry') : Symphony.Language.get('entries')) + '</span>');
 		
 	},
 	
