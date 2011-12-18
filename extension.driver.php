@@ -91,10 +91,11 @@
 		 * Add publish filter
 		 */
 		public function initaliseAdminPageHead($context) {
-			$page = $context['parent']->Page;
+			$page = Administration::instance()->Page;
+			$callback = Administration::instance()->getPageCallback();
 			
 			// Include filter?
-			if ($page instanceof ContentPublish and $page->_context['page'] == 'index') {
+			if ($page instanceOf contentPublish && $callback['context']['page'] == 'index') {
 				
 				$sm = new SectionManager(Symphony::Engine());
 				$section_id = $sm->fetchIDFromHandle($page->_context['section_handle']);
