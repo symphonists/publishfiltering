@@ -118,7 +118,7 @@ var PublishTabs = {
 			.append($input_apply)
 			.append($input_reset)
 		
-		jQuery('#contents > h2').after($form);
+		jQuery('#contents').prepend($form);
 		
 		this.renderValueInput(this.active_filter.handle, false);
 		

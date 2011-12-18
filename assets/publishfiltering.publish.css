@@ -4,7 +4,7 @@ h2 span.publishfiltering {
 }
 
 form.publishfiltering {
-    margin: 0 -17px 1.75em -17px;
+    margin: 0 -17px 1.75em 0;
     padding: 0.5em 16px 1em 16px;
     vertical-align: middle;
     border-bottom: 1px solid #e6e6e5;
@@ -30,6 +30,8 @@ form.publishfiltering .value {
 }
 form.publishfiltering input.apply {
 	margin-right: 4px;
+	padding: 2px 14px;
+	float: none;
 }
 form.publishfiltering button.clear {
 	padding: 0;
@@ -37,4 +39,7 @@ form.publishfiltering button.clear {
 	border: none;
 	color: #aaa;
 	cursor: pointer;
+	float: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
