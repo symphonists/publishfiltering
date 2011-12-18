@@ -182,7 +182,7 @@
 	/*-----------------------------------------------------------------------*/
 		
 		public function install() {
-			return Administration::instance()->Database->query("ALTER TABLE `tbl_sections` ADD `filterable` enum('yes','no') NOT NULL DEFAULT 'yes'");
+			return Administration::instance()->Database()->query("ALTER TABLE `tbl_sections` ADD `filterable` enum('yes','no') NOT NULL DEFAULT 'yes'");
 		}
 		
 		public function update($previousVersion) {
@@ -192,7 +192,7 @@
 		}
 
 		public function uninstall() {
-			return Administration::instance()->Database->query("ALTER TABLE `tbl_sections` DROP `filterable`");
+			return Administration::instance()->Database()->query("ALTER TABLE `tbl_sections` DROP `filterable`");
 		}
 				
 	}
