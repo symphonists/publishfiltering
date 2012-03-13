@@ -55,7 +55,7 @@
 		 * for this section. Defaults to 'yes'.
 		 */		
 		public function addSectionSetting($context) {
-		
+			/*
 			// Get current setting
 			$setting = array();
 			if($context['meta']['filterable'] == 'no') {
@@ -76,15 +76,16 @@
 			
 			// Append setting
 			$column[0]->appendChild($label);
+			*/
 		}
 		
 		/**
 		 * If a section should be filterable, make sure 'filterable' is set to 'yes'
 		 */
 		public function saveSectionSettings($context) {
-			if(!$context['meta']['filterable']) {
+			/*if(!$context['meta']['filterable']) {
 				$context['meta']['filterable'] = 'yes';
-			}
+			}*/
 		}
 		
 		/**
@@ -106,7 +107,7 @@
 				$fields = array();
 				
 				// Section is filterable
-				if($section->get('filterable') == 'yes') {
+				//if($section->get('filterable') == 'yes') {
 					foreach ($section->fetchFilterableFields() as $field) {
 						if (in_array($field->get('type'), $this->_incompatible_publishpanel)) continue;
 	
@@ -175,7 +176,7 @@
 					
 					$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.css', 'screen', 92370002);
 					$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.js', 92370003);
-				}
+				//}
 			}
 			
 		}
@@ -183,7 +184,7 @@
 	/*-----------------------------------------------------------------------*/
 		
 		public function install() {
-			return Administration::instance()->Database()->query("ALTER TABLE `tbl_sections` ADD `filterable` enum('yes','no') NOT NULL DEFAULT 'yes'");
+			//return Administration::instance()->Database()->query("ALTER TABLE `tbl_sections` ADD `filterable` enum('yes','no') NOT NULL DEFAULT 'yes'");
 		}
 		
 		public function update($previousVersion) {
@@ -193,7 +194,7 @@
 		}
 
 		public function uninstall() {
-			return Administration::instance()->Database()->query("ALTER TABLE `tbl_sections` DROP `filterable`");
+			//return Administration::instance()->Database()->query("ALTER TABLE `tbl_sections` DROP `filterable`");
 		}
 				
 	}

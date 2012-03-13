@@ -118,7 +118,7 @@ var PublishTabs = {
 			.append($input_apply)
 			.append($input_reset)
 		
-		jQuery('#contents').prepend($form);
+		jQuery('#context').append($form);
 		
 		this.renderValueInput(this.active_filter.handle, false);
 		
