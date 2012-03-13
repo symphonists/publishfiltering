@@ -8,19 +8,6 @@
 		
 		private $_incompatible_publishpanel = array('mediathek', 'imagecropper', 'readonlyinput');
 		
-		public function about() {
-			return array(
-				'name'			=> 'Publish Filtering',
-				'version'		=> '1.6.1',
-				'release-date'	=> '2011-05-08',
-				'author'		=> array(
-					'name'			=> 'Nick Dunn',
-					'website'		=> 'http://airlock.com'
-				),
-				'description'	=> 'Add a filter box to publish index pages.'
-			);
-		}
-		
 		public function getSubscribedDelegates() {
 			return array(
 				array(
@@ -176,6 +163,11 @@
 					
 					$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.css', 'screen', 92370002);
 					$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.js', 92370003);
+					
+					// weird, had to add this dummy span, wasn't able to add an entirely empty drawer
+					$page->insertDrawer(Widget::Drawer('Filters', new XMLElement('span')));
+					
+					
 				//}
 			}
 			

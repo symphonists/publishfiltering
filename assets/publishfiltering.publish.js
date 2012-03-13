@@ -1,8 +1,8 @@
 Symphony.Language.add({
 	'contains': false,
 	'is': false,
-	'Filter': false,
-	'Clear filters': false,
+	'Apply': false,
+	'Clear': false,
 	'entry': false,
 	'entries': false,
 });
@@ -48,9 +48,9 @@ var PublishTabs = {
 		var $form = jQuery('<form class="publishfiltering" method="get" action="" />');
 		this.$select_field = jQuery('<select class="field" name="field" />');
 		this.$select_comparison = jQuery('<select class="comparison" name="comparison" />');
-		var $input_filter = jQuery('<input />');
-		var $input_apply = jQuery('<input class="apply" type="submit" value="' + Symphony.Language.get("Filter") + '" />');
-		var $input_reset = jQuery('<button class="clear"><span>' + Symphony.Language.get("Clear filters") + '</span></button>');
+		var $input_filter = jQuery('<input type="text" />');
+		var $input_apply = jQuery('<input class="apply" type="submit" value="' + Symphony.Language.get("Apply") + '" />');
+		var $input_reset = jQuery('<button class="clear"><span>' + Symphony.Language.get("Clear") + '</span></button>');
 		
 		var i = 0;
 		for (var label in this.fields) {
@@ -118,7 +118,7 @@ var PublishTabs = {
 			.append($input_apply)
 			.append($input_reset)
 		
-		jQuery('#context').append($form);
+		jQuery('#drawer-filters .contents').append($form);
 		
 		this.renderValueInput(this.active_filter.handle, false);
 		
@@ -178,7 +178,7 @@ var PublishTabs = {
 			
 			if(from_interaction) this.$select_comparison.val('contains');
 			
-			$value_input = jQuery('<input name="value" class="value" />').val(this.active_filter.value);
+			$value_input = jQuery('<input type="text" name="value" class="value" />').val(this.active_filter.value);
 
 		}
 		
