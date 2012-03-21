@@ -4,7 +4,7 @@ Symphony.Language.add({
 	'Apply': false,
 	'Clear': false,
 	'entry': false,
-	'entries': false,
+	'entries': false
 });
 
 var PublishTabs = {
