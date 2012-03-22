@@ -165,7 +165,7 @@
 					$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.js', 92370003);
 					
 					// weird, had to add this dummy span, wasn't able to add an entirely empty drawer
-					$page->insertDrawer(Widget::Drawer('Filters', new XMLElement('span')));
+					$page->insertDrawer(Widget::Drawer('Filters'), 'horizontal');
 					
 					
 				//}
