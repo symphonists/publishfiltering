@@ -165,7 +165,7 @@
 					$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.css', 'screen', 92370002);
 					$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.js', 92370003);
 					
-					$page->insertDrawer(Widget::Drawer('publish-filtering', __('Search Entries'), NULL, 'closed', $section_handle), 'horizontal');
+					$page->insertDrawer(Widget::Drawer('publish-filtering', __('Filter Entries'), NULL, 'closed', $section_handle), 'horizontal');
 					
 					
 				//}
