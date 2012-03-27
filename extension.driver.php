@@ -86,7 +86,8 @@
 			if ($page instanceOf contentPublish && $callback['context']['page'] == 'index') {
 				
 				$sm = new SectionManager(Symphony::Engine());
-				$section_id = $sm->fetchIDFromHandle($page->_context['section_handle']);
+				$section_handle = $page->_context['section_handle'];
+				$section_id = $sm->fetchIDFromHandle($section_handle);
 				
 				if(!$section_id) return;
 				
@@ -164,8 +165,7 @@
 					$page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.css', 'screen', 92370002);
 					$page->addScriptToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.js', 92370003);
 					
-					// weird, had to add this dummy span, wasn't able to add an entirely empty drawer
-					$page->insertDrawer(Widget::Drawer('Filters'), 'horizontal');
+					$page->insertDrawer(Widget::Drawer('publish-filtering', __('Search Entries'), NULL, 'opened', $section_handle), 'horizontal');
 					
 					
 				//}

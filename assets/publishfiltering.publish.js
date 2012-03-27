@@ -9,6 +9,8 @@ Symphony.Language.add({
 
 var PublishTabs = {
 	
+	drawer: null,
+	
 	$select_field: null,
 	$select_comparison: null,
 	$value_input: null,
@@ -31,8 +33,14 @@ var PublishTabs = {
 	init: function() {
 		var self = this;
 		
+		this.drawer = jQuery('#drawer-publish-filtering');
+		
+		this.drawer.bind('expandstop.drawer', function() {
+			self.drawer.find('input[type="text"]:first').focus();
+		});
+		
 		// get active filter from querystring
-		var filter_querystring = window.location.href.match(/\?filter=(([^:]+):(.*))?/);
+		var filter_querystring = window.location.href.match(/\?filter\[(([^:]+)\]=(.*))?/);
 		if (filter_querystring && filter_querystring[3] != undefined) {
 			this.active_filter.handle = window.decodeURI(filter_querystring[2]);
 			this.active_filter.value = window.decodeURI(filter_querystring[3]);
@@ -103,7 +111,7 @@ var PublishTabs = {
 			var comparison = self.$select_comparison.val();
 
 			if (handle && value) {
-				var href = '?filter=' + encodeURI(handle) + ':';
+				var href = '?filter[' + encodeURI(handle) + ']=';
 				if (comparison == 'contains') href += 'regexp:';
 				href += encodeURI(value);
 				window.location.href = href;
@@ -118,7 +126,7 @@ var PublishTabs = {
 			.append($input_apply)
 			.append($input_reset)
 		
-		jQuery('#drawer-filters .contents').append($form);
+		this.drawer.find('.contents').empty().append($form);
 		
 		this.renderValueInput(this.active_filter.handle, false);
 		
