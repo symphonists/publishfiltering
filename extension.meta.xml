@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension id="publishfiltering" status="released" xmlns="http://symphony-cms.com/schemas/extension/1.0">
 	<name>Publish Filtering</name>
-	<description>Dynamic filter and keyword search in the backend</description>
+	<description>Adds keyword search and column filtering to entry lists in the Symphony backend.</description>
 	<repo type="github">https://github.com/nickdunn/publishfiltering</repo>
 	<url type="discuss">http://symphony-cms.com/discuss/thread/742/</url>
 	<types>
 		<type>Workflow</type>
+		<type>Search</type>
 	</types>
 	<authors>
 		<author>
