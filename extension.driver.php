@@ -1,6 +1,6 @@
 <?php
 	
-	class Extension_PublishFiltering extends Extension {
+	class Extension_Publish_Filtering extends Extension {
 	
 	/*-------------------------------------------------------------------------
 		Extension definition
