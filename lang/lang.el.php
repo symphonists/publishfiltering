@@ -1,7 +1,7 @@
 <?php
 
 	$about = array(
-		'name' => 'Greek translation',
+		'name' => 'Greek',
 		'author' => array(
 			'name' => 'George Petsagourakis',
 			'email' => 'petsagouris@gmail.com',
