@@ -15,25 +15,27 @@
 	 */
 	$dictionary = array(
 
-		'contains' => 
+		'%s Disable publish filtering for this section' =>
+		'%s Desabilitar filtros de publicação para esta seção',
+
+		'Filter Entries' =>
+		'Filtrar Registros',
+
+		'contains' =>
 		'contém',
 
-		'entries' => 
-		'registros',
-
-		'entry' => 
-		'registro',
-
-		'is' => 
+		'is' =>
 		'é',
 
-		'Filter' => 
-		'Filtrar',
+		'Apply' =>
+		'Aplicar',
 
-		'Clear filters' => 
-		'Limpar filtros',
-		
-		'Disable publish filtering for this section' =>
-		'Desabilitar filtros de publicação para esta seção'
+		'Clear' =>
+		'Limpar',
 
+		'entry' =>
+		'registro',
+
+		'entries' =>
+		'registros'
 	);
