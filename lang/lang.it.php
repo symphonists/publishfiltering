@@ -25,7 +25,7 @@
 		'contiene',
 		
 		'is' =>
-		'&egrave;',
+		'è',
 		
 		'entry' =>
 		'voce',
