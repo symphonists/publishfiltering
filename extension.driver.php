@@ -131,7 +131,14 @@
 						$xpath = new DomXPath($dom);
 	
 						$count = 0;
-						foreach($xpath->query("//*[name()='option'] | //*[name()='li']") as $option) {
+						
+						//Convert Query result Object to array for natural ordering
+						$nodeArray = $this->xpath2array($xpath->query("//*[name()='option'] | //*[name()='li']"));
+						
+						//Sort array in natural string ordering
+						usort($nodeArray,array($this, 'cmpsort'));
+						
+						foreach($nodeArray as $option) {
 	
 							$value = '';
 	
@@ -148,6 +155,7 @@
 							}
 	
 						}
+
 	
 						if ($field->get('type') == 'checkbox') {
 							$fields[$field->get('label')]['options'][] = 'Yes';
@@ -174,6 +182,19 @@
 		}
 		
 	/*-----------------------------------------------------------------------*/
+
+		public function cmpsort($a,$b){
+			//Force all return values to string for string natural ordering
+			return strnatcmp((string)$a->nodeValue,(string)$b->nodeValue);
+		}
+
+		public function xpath2array($domnodelist) {
+		    $return = array();
+		    for ($i = 0; $i < $domnodelist->length; ++$i) {
+		        $return[] = $domnodelist->item($i);
+		    }
+		    return $return;
+		}
 		
 		public function install() {
 			//return Administration::instance()->Database()->query("ALTER TABLE `tbl_sections` ADD `filterable` enum('yes','no') NOT NULL DEFAULT 'yes'");
