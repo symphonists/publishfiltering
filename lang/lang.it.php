@@ -18,19 +18,31 @@
 
 	$dictionary = array(
 	
-		'Clear' =>
-		'Azzera',
-		
-		'contains' =>
+		'contains' => 
 		'contiene',
-		
-		'is' =>
-		'&egrave;',
-		
-		'entry' =>
+
+		'entries' => 
+		'voci',
+
+		'entry' => 
 		'voce',
+
+		'is' => 
+		'&egrave;',
+
+		'Filter' => 
+		'Filtra',
+
+		'Filter Entries' => 
+		'Filtra voci',
+
+		'Clear filters' => 
+		'Azzera filtro',
 		
-		'entries' =>
-		'voci'
+		'Disable publish filtering for this section' =>
+		'Disabilita la ricerca per questa sezione',
+
+		'Clear' =>
+		'Azzera'
 
 	);
