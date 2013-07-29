@@ -93,7 +93,7 @@ var PublishTabs = {
 		});
 		
 		this.$select_field.bind('change', function() {
-			var handle = jQuery(this).attr('value');
+			var handle = jQuery(this).val();
 			self.renderValueInput(handle, true);
 			self.$value_input.focus();
 		});
