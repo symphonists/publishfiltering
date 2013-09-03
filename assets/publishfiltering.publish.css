@@ -85,6 +85,17 @@
 	float: left;
 	-webkit-transition: width 0.25s ease-in;
 	transition: width 0.25s ease-in;
+	position: relative;
+}
+
+#drawer-publishfiltering .publishfiltering-search i {
+	position: absolute;
+	top: 1px;
+	right: 10px;
+	cursor: pointer;
+	display: block;
+	height: 20px;
+	z-index: 2000;
 }
 
 /* Dropdown */
