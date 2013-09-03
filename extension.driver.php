@@ -17,7 +17,7 @@
 		}
 
 		/**
-		 * Create publish filtering interface
+		 * Append publish filtering interface
 		 */
 		public function createInterface($context) {
 			$callback = Symphony::Engine()->getPageCallback();
@@ -35,38 +35,47 @@
 					"Symphony.Context.add('publishfiltering', " . json_encode($this->_options) . ")",
 					array('type' => 'text/javascript')
 				), 1004);
-				
-				// Create form
-				$form = Widget::Form(null, 'get', 'publishfiltering');
-				$div = new XMLElement('div', null, array('class' => 'publishfiltering-controls'));
-				$div->appendChild(
-					Widget::Select('fields', $this->_fields, array(
-						'class' => 'publishfiltering-fields'
-					))
-				);
-				$div->appendChild(
-					Widget::Select('comparison', array(
-						array('contains', false, __('contains')),
-						array('is', false, __('is'))
-					), array(
-						'class' => 'publishfiltering-comparison'
-					))
-				);
-				$form->appendChild($div);
-				$form->appendChild(
-					Widget::Input('value', null, 'text', array(
-						'class' => 'publishfiltering-search',
-						'placeholder' => __('Select') . ' …')
-					)
-				);
 
-				// Create drawer
+				// Append drawer
 				Administration::instance()->Page->insertDrawer(
-					Widget::Drawer('publishfiltering', __('Filter Entries'), $form)
+					Widget::Drawer('publishfiltering', __('Filter Entries'), $this->createDrawer())
 				);
 			}
 		}
 
+		/**
+		 * Create drawer
+		 */
+		public function createDrawer() {
+			$form = Widget::Form(null, 'get', 'publishfiltering');
+			$div = new XMLElement('div', null, array('class' => 'publishfiltering-controls'));
+			$div->appendChild(
+				Widget::Select('fields', $this->_fields, array(
+					'class' => 'publishfiltering-fields'
+				))
+			);
+			$div->appendChild(
+				Widget::Select('comparison', array(
+					array('contains', false, __('contains')),
+					array('is', false, __('is'))
+				), array(
+					'class' => 'publishfiltering-comparison'
+				))
+			);
+			$form->appendChild($div);
+			$form->appendChild(
+				Widget::Input('value', null, 'text', array(
+					'class' => 'publishfiltering-search',
+					'placeholder' => __('Type to search') . ' …')
+				)
+			);
+
+			return $form;
+		}
+
+		/**
+		 * Get field names
+		 */
 		public function getFields($section_handle) {
 			$sectionManager = new SectionManager(Symphony::Engine());
 			$section_id = $sectionManager->fetchIDFromHandle($section_handle);
@@ -75,17 +84,17 @@
 
 			// Filterable sections
 			$section = $sectionManager->fetch($section_id);
-			$fields = array();
 			foreach($section->fetchFilterableFields() as $field) {
 				if(in_array($field->get('type'), $this->_incompatible_publishpanel)) continue;
 
 				$this->_fields[] = array($field->get('element_name'), false, $field->get('label'));
 				$this->getFieldOptions($field);
 			}
-
-			return $fields;
 		}
 
+		/**
+		 * Get default field options
+		 */
 		public function getFieldOptions($field) {
 			if(method_exists($field, 'getToggleStates')) {
 				$options = $field->getToggleStates();
