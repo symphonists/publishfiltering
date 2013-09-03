@@ -3,7 +3,7 @@
 	Symphony.Language.add({
 		'Click to select': false,
 		'Type to search': false,
-		'You are looking at a filtered entry index.': false,
+		'You are viewing a filtered entry index.': false,
 		'Clear?': false
 	});
 
@@ -27,6 +27,7 @@
 					create: true,
 					maxItems: 1,
 					render: {
+						item: itemPreview,
         				option_create: searchPreview
         			}
 				}).on('change', searchEntries);
@@ -35,6 +36,9 @@
 				fieldsSelectize = fields[0].selectize;
 				comparisonSelectize = comparison[0].selectize;
 				searchSelectize = search[0].selectize;
+
+				// Clear search
+				drawer.on('click.publishfiltering', 'i', clear);
 
 				// Restore filter from URL
 				restoreFilter();
@@ -91,6 +95,10 @@
 					comparisonSelectize.setValue('contains');
 					searchSelectize.$control_input.attr('placeholder', Symphony.Language.get('Type to search') + '…');
 				}		
+			};
+
+			var itemPreview = function(item, espace) {
+				return '<div>' + item.text + '<i>Clear</i></div>';
 			};
 
 			var searchPreview = function(item) {
@@ -183,6 +191,9 @@
 			};
 
 			var clear = function() {
+				fieldsSelectize.clear();
+				comparisonSelectize.clear();
+				searchSelectize.clear();
 				window.location.href = location.href.replace(location.search, '');
 			};
 
@@ -190,14 +201,13 @@
 				return name in options;
 			};
 
-			// System messages
 			var notifyFilter = function() {
 				if(location.search.indexOf('filter') !== -1) {
 					if(button.is('.selected')) {
 						$('header .filtered').trigger('detach.notify');
 					}
 					else {
-						notifier.trigger('attach.notify', [Symphony.Language.get('You are looking at a filtered entry index.') + ' <a href="' + location.href.replace(location.search, '') + '">' + Symphony.Language.get('Clear?') + ' </a>', 'filtered']);
+						notifier.trigger('attach.notify', [Symphony.Language.get('You are viewing a filtered entry index.') + ' <a href="' + location.href.replace(location.search, '') + '">' + Symphony.Language.get('Clear?') + ' </a>', 'filtered']);
 					}
 				}
 			};
