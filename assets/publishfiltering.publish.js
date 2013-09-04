@@ -6,7 +6,8 @@
 		'Type to search': false,
 		'You are viewing a filtered entry index.': false,
 		'Clear': false,
-		'Clear?': false
+		'Clear?': false,
+		'Search for {$item}': false
 	});
 
 	$(document).on('ready.publishfiltering', function() {
@@ -101,7 +102,7 @@
 			};
 
 			var searchPreview = function(item) {
-				return '<div class="create"><em>' + Symphony.Language.get('Search for') + ' ' + item.input + ' …</em></div>';
+				return '<div class="create"><em>' + Symphony.Language.get('Search for {$item}', {item: item.input}) + ' …</em></div>';
 			};
 
 			var itemPreview = function(item, escape) {

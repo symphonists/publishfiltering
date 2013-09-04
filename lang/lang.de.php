@@ -39,4 +39,7 @@
 		'is' => 
 		'entspricht',
 
+		'Search for {$item}' =>
+		'Nach {$item} suchen'
+
 	);
