@@ -5,44 +5,40 @@
 		'author' => array(
 			'name' => 'Simone Economo',
 			'email' => 'my.ekoes@gmail.com',
-			'website' => 'http://lineheight.net',
+			'website' => 'http://lineheight.net'
 		),
-		'release-date' => '2010-08-24',
+		'release-date' => '2013-09-04'
 	);
-	
-	
-	/*
-	 * EXTENSION: Publish Filtering
-	 * Localisation strings
+
+	/**
+	 * Publish Filtering
 	 */
-
 	$dictionary = array(
-	
-		'contains' => 
-		'contiene',
-
-		'entries' => 
-		'voci',
-
-		'entry' => 
-		'voce',
-
-		'is' => 
-		'&egrave;',
-
-		'Filter' => 
-		'Filtra',
 
 		'Filter Entries' => 
 		'Filtra voci',
 
-		'Clear filters' => 
-		'Azzera filtro',
-		
-		'Disable publish filtering for this section' =>
-		'Disabilita la ricerca per questa sezione',
+		'contains' => 
+		'contiene',
 
-		'Clear' =>
-		'Azzera'
+		'is' => 
+		'&egrave;',
+
+		// Missing
+
+		'Type to search' => 
+		false,
+
+		'Click to select' => 
+		false,
+
+		'You are viewing a filtered entry index.' => 
+		false,
+
+		'Clear' => 
+		false,
+
+		'Clear?' => 
+		false,
 
 	);

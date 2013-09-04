@@ -7,7 +7,7 @@
 			'email' => 'mt@marciotoledo.com',
 			'website' => 'http://marciotoledo.com'
 		),
-		'release-date' => '2012-12-10'
+		'release-date' => '2013-09-04'
 	);
 
 	/**
@@ -15,27 +15,30 @@
 	 */
 	$dictionary = array(
 
-		'%s Disable publish filtering for this section' =>
-		'%s Desabilitar filtros de publicação para esta seção',
-
-		'Filter Entries' =>
+		'Filter Entries' => 
 		'Filtrar Registros',
 
-		'contains' =>
+		'contains' => 
 		'contém',
 
-		'is' =>
+		'is' => 
 		'é',
 
-		'Apply' =>
-		'Aplicar',
+		// Missing
 
-		'Clear' =>
-		'Limpar',
+		'Type to search' => 
+		false,
 
-		'entry' =>
-		'registro',
+		'Click to select' => 
+		false,
 
-		'entries' =>
-		'registros'
+		'You are viewing a filtered entry index.' => 
+		false,
+
+		'Clear' => 
+		false,
+
+		'Clear?' => 
+		false,
+
 	);

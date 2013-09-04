@@ -7,7 +7,7 @@
 			'email' => 'vlad.ghita@xandergroup.ro',
 			'website' => ''
 		),
-		'release-date' => '2011-04-01'
+		'release-date' => '2013-09-04'
 	);
 
 	/**
@@ -15,25 +15,30 @@
 	 */
 	$dictionary = array(
 
-		'Disable publish filtering for this section' => 
-		'Afişează filtrarea înregistrărilor pentru această secţiune.',
-
 		'contains' => 
 		'conţine',
 
 		'is' => 
 		'este',
 
-		'Filter' => 
-		'Filtrează',
+		// Missing
 
-		'Clear filters' => 
-		'Şterge filtrele',
+		'Filter Entries' => 
+		false,
 
-		'entry' => 
-		'înregistrare',
+		'Type to search' => 
+		false,
 
-		'entries' => 
-		'înregistrări',
+		'Click to select' => 
+		false,
+
+		'You are viewing a filtered entry index.' => 
+		false,
+
+		'Clear' => 
+		false,
+
+		'Clear?' => 
+		false,
 
 	);

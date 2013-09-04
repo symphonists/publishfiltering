@@ -7,45 +7,38 @@
 			'email' => 'petsagouris@gmail.com',
 			'website' => ''
 		),
-		'release-date' => '2012-06-02'
+		'release-date' => '2013-09-04'
 	);
 
 	/**
-	 * Select Box Link Field
+	 * Publish Filtering
 	 */
 	$dictionary = array(
 
+		'Filter Entries' => 
+		'Φιλτράρισμα Εγγραφών',
+
+		'contains' => 
+		'περιέχει',
+
+		'is' => 
+		'είναι',
+
 		// Missing
 
-		'Select Box Link' => 
-		'Σύνδεσμος Κουτιού Επιλογής',
+		'Type to search' => 
+		false,
 
-		'Values' => 
-		'Τιμές',
+		'Click to select' => 
+		false,
 
-		'Limit to the %s most recent entries' => 
-		'Να περιορίζεται στις %s πιο πρόσφατες εγγραφές',
+		'You are viewing a filtered entry index.' => 
+		false,
 
-		'Allow selection of multiple options' => 
-		'Να επιτρέπονται οι πολλαπλές επιλογές',
-		
-		
-		'Clear' =>
-		'Καθαρισμός',
-		
-		'contains' =>
-		'περιέχει',
-		
-		'is' =>
-		'είναι',
-		
-		'entry' =>
-		'εγγραφή',
-		
-		'entries' =>
-		'εγγραφές',
-		
-		'Filter Entries' =>
-		'Φιλτράρισμα Εγγραφών'
+		'Clear' => 
+		false,
+
+		'Clear?' => 
+		false,
 
 	);

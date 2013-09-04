@@ -5,6 +5,7 @@
 		'Click to select': false,
 		'Type to search': false,
 		'You are viewing a filtered entry index.': false,
+		'Clear': false,
 		'Clear?': false
 	});
 
@@ -104,7 +105,7 @@
 			};
 
 			var itemPreview = function(item, escape) {
-				return '<div class="item">' + escape(item.text) + '<a href="' + location.href.replace(location.search, '') + '" class="destructor">Clear</a></div>';
+				return '<div class="item">' + escape(item.text) + '<a href="' + location.href.replace(location.search, '') + '" class="destructor">' + Symphony.Language.get('Clear') + '</a></div>';
 			};
 
 			var searchEntries = function() {
