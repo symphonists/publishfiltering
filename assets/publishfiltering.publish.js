@@ -24,6 +24,7 @@
 				fields.selectize().on('change', switchField);
 				comparison.selectize().on('change', searchEntries);
 				search.selectize({
+					plugins: ['restore_on_backspace'],
 					create: true,
 					maxItems: 1,
 					render: {
