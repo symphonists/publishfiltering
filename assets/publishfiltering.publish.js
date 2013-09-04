@@ -1,4 +1,5 @@
-(function($) {
+(function($, Symphony) {
+	'use strict';
 
 	Symphony.Language.add({
 		'Click to select': false,
@@ -9,7 +10,7 @@
 
 	$(document).on('ready.publishfiltering', function() {
 
-		Publishfiltering = function() {
+		var Publishfiltering = function() {
 			var contents = $('#contents'),
 				notifier = $('div.notifier'),
 				button = $('a[href="#drawer-publishfiltering"]'),
@@ -29,8 +30,8 @@
 					maxItems: 1,
 					render: {
 						item: itemPreview,
-        				option_create: searchPreview
-        			}
+						option_create: searchPreview
+					}
 				}).on('change', searchEntries);
 
 				// Store Selectize instances
@@ -39,7 +40,7 @@
 				searchSelectize = search[0].selectize;
 
 				// Clear search
-				drawer.on('click.publishfiltering', 'i', clear);
+				drawer.on('mousedown.publishfiltering', '.destructor', clear);
 
 				// Restore filter from URL
 				restoreFilter();
@@ -54,7 +55,7 @@
 					$.each(filter, function(key, value) {
 						if(value.indexOf('filter') == 0) {
 							value = decodeURIComponent(value);
-							settings = value.match(/filter\[(.*)\]=(regexp:)?(.*)/);
+							var settings = value.match(/filter\[(.*)\]=(regexp:)?(.*)/);
 							fieldsSelectize.setValue(settings[1]);
 
 							// Add existing options to selection 
@@ -71,7 +72,7 @@
 				}
 			};
 
-			var switchField = function(event) {
+			var switchField = function() {
 				var field = fieldsSelectize.getValue();
 
 				// Clear
@@ -82,7 +83,7 @@
 					comparisonSelectize.setValue('is');
 					searchSelectize.$control_input.attr('placeholder', Symphony.Language.get('Click to select') + '…');
 					$.each(options[field], function(key, option) {
-						value = (typeof key === 'string') ? key : option;
+						var value = (typeof key === 'string') ? key : option;
 
 						searchSelectize.addOption({
 							value: value,
@@ -98,19 +99,19 @@
 				}		
 			};
 
-			var itemPreview = function(item, espace) {
-				return '<div>' + item.text + '<i>Clear</i></div>';
-			};
-
 			var searchPreview = function(item) {
 				return '<div class="create"><em>' + Symphony.Language.get('Search for') + ' ' + item.input + ' …</em></div>';
 			};
 
-			var searchEntries = function(event) {
+			var itemPreview = function(item, escape) {
+				return '<div class="item">' + escape(item.text) + '<a href="' + location.href.replace(location.search, '') + '" class="destructor">Clear</a></div>';
+			};
+
+			var searchEntries = function() {
 				var field = fieldsSelectize.getValue(),
 					comparison = comparisonSelectize.getValue(),
 					needle = searchSelectize.getValue(),
-					method, url;
+					base, method, url;
 
 				// Fetch entries
 				if(field && needle) {
@@ -148,13 +149,13 @@
 				contents.append(pagination);
 				pagegoto
 					.val(pageinactive)
-					.on('focus.admin', function(event) {
+					.on('focus.admin', function() {
 						if(pagegoto.val() == pageactive) {
 							pagegoto.val('');
 						}
 						pageform.addClass('active');
 					})
-					.on('blur.admin', function(event) {
+					.on('blur.admin', function() {
 						if(pageform.is('.invalid') || pagegoto.val() == '') {
 							pageform.removeClass('invalid');
 							pagegoto.val(pageinactive);
@@ -166,24 +167,24 @@
 				);
 				pageform
 					.attr('action', window.location.href)
-					.on('mouseover.admin', function(event) {
+					.on('mouseover.admin', function() {
 						if(!pageform.is('.active') && pagegoto.val() == pageinactive) {
 							pagegoto.val(pageactive);
 						}
 					})
-					.on('mouseout.admin', function(event) {
+					.on('mouseout.admin', function() {
 						if(!pageform.is('.active') && pagegoto.val() == pageactive) {
 							pagegoto.val(pageinactive);
 						}
 					})
-					.on('submit.admin', function(event) {
-						if(parseInt(pagegoto.val()) > parseInt(pagegoto.attr('data-max'))) {
+					.on('submit.admin', function() {
+						if(parseInt(pagegoto.val(), 10) > parseInt(pagegoto.attr('data-max'), 10)) {
 							pageform.addClass('invalid');
 							return false;
 						}
 					}
 				);
-			}
+			};
 
 			var setURL = function(url) {
 				if(!!(window.history && history.pushState)) {
@@ -192,9 +193,8 @@
 			};
 
 			var clear = function() {
-				fieldsSelectize.clear();
-				comparisonSelectize.clear();
 				searchSelectize.clear();
+				searchSelectize.clearOptions();
 				window.location.href = location.href.replace(location.search, '');
 			};
 
@@ -217,11 +217,11 @@
 			return {
 				init: init,
 				clear: clear
-			}
+			};
 		}();
 
 		// Init filter interface
 		Publishfiltering.init();
 	});
 
-})(window.jQuery);
+})(window.jQuery, window.Symphony);
