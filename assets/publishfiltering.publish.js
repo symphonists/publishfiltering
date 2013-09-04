@@ -53,13 +53,13 @@
 				if(location.search.indexOf('filter') !== -1) {
 					var filter = location.search.substring(1).split('&');
 					$.each(filter, function(key, value) {
-						if(value.indexOf('filter') == 0) {
+						if(value.indexOf('filter') === 0) {
 							value = decodeURIComponent(value);
 							var settings = value.match(/filter\[(.*)\]=(regexp:)?(.*)/);
 							fieldsSelectize.setValue(settings[1]);
 
 							// Add existing options to selection 
-							if(settings[2] == 'regexp:') {
+							if(settings[2] === 'regexp:') {
 								searchSelectize.addOption({
 									value: settings[3],
 									text: settings[3]
@@ -116,7 +116,7 @@
 				// Fetch entries
 				if(field && needle) {
 					base = location.href.replace(location.search, '');
-					method = (comparison == 'contains') ? 'regexp:' : '';
+					method = (comparison === 'contains') ? 'regexp:' : '';
 					url = base + '?filter[' + encodeURI(field) + ']=' + method + encodeURI(needle);
 
 					fetchEntries(url);
@@ -150,17 +150,17 @@
 				pagegoto
 					.val(pageinactive)
 					.on('focus.admin', function() {
-						if(pagegoto.val() == pageactive) {
+						if(pagegoto.val() === pageactive) {
 							pagegoto.val('');
 						}
 						pageform.addClass('active');
 					})
 					.on('blur.admin', function() {
-						if(pageform.is('.invalid') || pagegoto.val() == '') {
+						if(pageform.is('.invalid') || pagegoto.val() === '') {
 							pageform.removeClass('invalid');
 							pagegoto.val(pageinactive);
 						}
-						if(pagegoto.val() == pageinactive) {
+						if(pagegoto.val() === pageinactive) {
 							pageform.removeClass('active');
 						}
 					}
@@ -168,12 +168,12 @@
 				pageform
 					.attr('action', window.location.href)
 					.on('mouseover.admin', function() {
-						if(!pageform.is('.active') && pagegoto.val() == pageinactive) {
+						if(!pageform.is('.active') && pagegoto.val() === pageinactive) {
 							pagegoto.val(pageactive);
 						}
 					})
 					.on('mouseout.admin', function() {
-						if(!pageform.is('.active') && pagegoto.val() == pageactive) {
+						if(!pageform.is('.active') && pagegoto.val() === pageactive) {
 							pagegoto.val(pageinactive);
 						}
 					})
