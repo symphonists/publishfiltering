@@ -26,7 +26,7 @@
 			var init = function() {
 				fields.selectize().on('change', switchField);
 				comparison.selectize().on('change', searchEntries);
-				search.selectize({
+				search.addClass('init').selectize({
 					plugins: ['restore_on_backspace'],
 					create: true,
 					maxItems: 1,
@@ -49,11 +49,14 @@
 
 				// Notify about filtering
 				button.on('init.publishfiltering click.publishfiltering', notifyFilter).trigger('init.publishfiltering');
+
+				search.removeClass('init');
 			};
 
 			var restoreFilter = function() {
-				if(location.search.indexOf('filter') !== -1) {
+				if(location.search.indexOf('filter') > -1) {
 					var filter = location.search.substring(1).split('&');
+
 					$.each(filter, function(key, value) {
 						if(value.indexOf('filter') === 0) {
 							value = decodeURIComponent(value);
@@ -109,20 +112,22 @@
 				return '<div class="item">' + escape(item.text) + '<a href="' + location.href.replace(location.search, '') + '" class="destructor">' + Symphony.Language.get('Clear') + '</a></div>';
 			};
 
-			var searchEntries = function() {
-				var field = fieldsSelectize.getValue(),
-					comparison = comparisonSelectize.getValue(),
-					needle = searchSelectize.getValue(),
-					base, method, url;
+			var searchEntries = function(event) {
+				if(!search.is('.init')) {
+					var field = fieldsSelectize.getValue(),
+						comparison = comparisonSelectize.getValue(),
+						needle = searchSelectize.getValue(),
+						base, method, url;
 
-				// Fetch entries
-				if(field && needle) {
-					base = location.href.replace(location.search, '');
-					method = (comparison === 'contains') ? 'regexp:' : '';
-					url = base + '?filter[' + encodeURI(field) + ']=' + method + encodeURI(needle);
+					// Fetch entries
+					if(field && needle) {
+						base = location.href.replace(location.search, '');
+						method = (comparison === 'contains') ? 'regexp:' : '';
+						url = base + '?filter[' + encodeURI(field) + ']=' + method + encodeURI(needle);
 
-					fetchEntries(url);
-					setURL(url);
+						fetchEntries(url);
+						setURL(url);
+					}
 				}
 			};
 
