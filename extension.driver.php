@@ -26,7 +26,6 @@
 				$this->getFields($callback['context']['section_handle']);
 
 				// Append assets
-				Administration::instance()->Page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/selectize.css', 'screen', 1000);
 				Administration::instance()->Page->addScriptToHead(URL . '/extensions/publishfiltering/assets/selectize.js', 1001);
 				Administration::instance()->Page->addStylesheetToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.css', 'screen', 1002);
 				Administration::instance()->Page->addScriptToHead(URL . '/extensions/publishfiltering/assets/publishfiltering.publish.js', 1003);
