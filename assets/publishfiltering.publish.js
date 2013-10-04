@@ -143,7 +143,7 @@ var PublishTabs = {
 			});
 		}
 
-		var h2 = jQuery('h2 > span:first');
+		var h2 = jQuery('#breadcrumbs h2');
 		h2.after('<span class="publishfiltering inactive">' + count + ' ' +  ((count == 1) ? Symphony.Language.get('entry') : Symphony.Language.get('entries')) + '</span>');
 
 	},
