@@ -11,23 +11,25 @@
 	});
 
 	$(document).on('ready.publishfiltering', function() {
+		var contents = $('#contents'),
+			notifier = $('div.notifier'),
+			button = $('a[href="#drawer-publishfiltering"]'),
+			options = Symphony.Context.get('publishfiltering');
 
 		var Publishfiltering = function() {
-			var contents = $('#contents'),
-				notifier = $('div.notifier'),
-				button = $('a[href="#drawer-publishfiltering"]'),
-				drawer = $('#drawer-publishfiltering'),
-				fields = drawer.find('.publishfiltering-fields'),
-				comparison = drawer.find('.publishfiltering-comparison'),
-				search = drawer.find('.publishfiltering-search'),
-				options = Symphony.Context.get('publishfiltering'),
+			var filter, fields, comparison, search,
 				comparisonSelectize, searchSelectize, fieldsSelectize;
 
-			var init = function() {
+			var init = function(context) {
+				filter = $(context);
+				fields = filter.find('.publishfiltering-fields');
+				comparison = filter.find('.publishfiltering-comparison');
+				search = filter.find('.publishfiltering-search');
+
+				// Setup interface
 				fields.selectize().on('change', switchField);
 				comparison.selectize().on('change', searchEntries);
 				search.addClass('init').selectize({
-					plugins: ['restore_on_backspace'],
 					create: true,
 					maxItems: 1,
 					render: {
@@ -42,39 +44,10 @@
 				searchSelectize = search[0].selectize;
 
 				// Clear search
-				drawer.on('mousedown.publishfiltering', '.destructor', clear);
+				filter.on('mousedown.publishfiltering', '.destructor', clear);
 
-				// Restore filter from URL
-				restoreFilter();
-
-				// Notify about filtering
-				button.on('init.publishfiltering click.publishfiltering', notifyFilter).trigger('init.publishfiltering');
-
+				// Finish initialisation
 				search.removeClass('init');
-			};
-
-			var restoreFilter = function() {
-				if(location.search.indexOf('filter') > -1) {
-					var filter = location.search.substring(1).split('&');
-
-					$.each(filter, function(key, value) {
-						if(value.indexOf('filter') === 0) {
-							value = decodeURIComponent(value);
-							var settings = value.match(/filter\[(.*)\]=(regexp:)?(.*)/);
-							fieldsSelectize.setValue(settings[1]);
-
-							// Add existing options to selection 
-							if(settings[2] === 'regexp:') {
-								searchSelectize.addOption({
-									value: settings[3],
-									text: settings[3]
-								});
-							}
-
-							searchSelectize.setValue(settings[3]);
-						}
-					});
-				}
 			};
 
 			var switchField = function() {
@@ -114,22 +87,39 @@
 
 			var searchEntries = function(event) {
 				if(!search.is('.init')) {
-					var field = fieldsSelectize.getValue(),
-						comparison = comparisonSelectize.getValue(),
-						needle = searchSelectize.getValue(),
-						base, method, url;
+					var filters = buildFilters(),
+						base, url;
 
 					// Fetch entries
-					if(field && needle) {
+					if(filters != '') {
 						base = location.href.replace(location.search, '');
-						method = (comparison === 'contains') ? 'regexp:' : '';
-						url = base + '?filter[' + encodeURI(field) + ']=' + method + encodeURI(needle);
+						url = base + '?' + filters;
 
 						fetchEntries(url);
 						setURL(url);
 					}
 				}
 			};
+
+			var buildFilters = function() {
+				var filters = [];
+
+				$('.publishfiltering-row').each(function() {
+					var row = $(this),
+						fieldVal = row.find('.publishfiltering-fields').val(),
+						comparisonVal = row.find('.publishfiltering-comparison').val(),
+						searchVal = row.find('.publishfiltering-search').val(),
+						filterVal, method;
+
+					if(fieldVal && searchVal) {
+						method = (comparisonVal === 'contains') ? 'regexp:' : '';
+						filterVal = 'filter[' + encodeURI(fieldVal) + ']=' + method + encodeURI(searchVal);
+						filters.push(filterVal);
+					}
+				});
+
+				return filters.join('&');
+			}
 
 			var fetchEntries = function(url) {
 				$.ajax({
@@ -199,25 +189,15 @@
 				}
 			};
 
-			var clear = function() {
+			var clear = function(event) {
+				event.preventDefault();
+				if(searchSelectize.isLocked) return;
+
 				searchSelectize.clear();
-				searchSelectize.clearOptions();
-				window.location.href = location.href.replace(location.search, '');
 			};
 
 			var hasOptions = function(name) {
 				return name in options;
-			};
-
-			var notifyFilter = function() {
-				if(location.search.indexOf('filter') !== -1) {
-					if(button.is('.selected')) {
-						$('header .filtered').trigger('detach.notify');
-					}
-					else {
-						notifier.trigger('attach.notify', [Symphony.Language.get('You are viewing a filtered entry index.') + ' <a href="' + location.href.replace(location.search, '') + '">' + Symphony.Language.get('Clear?') + ' </a>', 'filtered']);
-					}
-				}
 			};
 
 			// API
@@ -225,10 +205,25 @@
 				init: init,
 				clear: clear
 			};
-		}();
+		};
+
+		// Notify about filtering
+		button.on('init.publishfiltering click.publishfiltering', function notifyFilter() {
+			if(location.search.indexOf('filter') !== -1) {
+				if(button.is('.selected')) {
+					$('header .filtered').trigger('detach.notify');
+				}
+				else {
+					notifier.trigger('attach.notify', [Symphony.Language.get('You are viewing a filtered entry index.') + ' <a href="' + location.href.replace(location.search, '') + '">' + Symphony.Language.get('Clear?') + ' </a>', 'filtered']);
+				}
+			}
+		}).trigger('init.publishfiltering');
 
 		// Init filter interface
-		Publishfiltering.init();
+		$('.publishfiltering-row').each(function() {
+			var filtering = new Publishfiltering();
+			filtering.init(this);
+		});
 	});
 
 })(window.jQuery, window.Symphony);
