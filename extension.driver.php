@@ -62,12 +62,21 @@
 				$this->createFilter();
 			}
 
+			// Create template
+			$this->createFilter(null, null, 'template');
+
 			return $this->form;
 		}
 
-		public function createFilter($field = null, $search = null) {
+		public function createFilter($field = null, $search = null, $class = null) {
 			$row = new XMLElement('div');
-			$row->setAttribute('class', 'publishfiltering-row');
+
+			if($class) {
+				$row->setAttribute('class', 'publishfiltering-row ' . $class);
+			}
+			else {
+				$row->setAttribute('class', 'publishfiltering-row');
+			}
 
 			// Fields
 			$fields = $this->_fields;
