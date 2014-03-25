@@ -4,17 +4,14 @@
 	Symphony.Language.add({
 		'Click to select': false,
 		'Type to search': false,
-		'You are viewing a filtered entry index.': false,
 		'Clear': false,
-		'Clear?': false,
 		'Search for {$item}': false,
-		'Add filter': false
+		'Add filter': false,
+		'filtered': false
 	});
 
 	$(document).on('ready.publishfiltering', function() {
 		var contents = $('#contents'),
-			notifier = $('div.notifier'),
-			button = $('a[href="#drawer-publishfiltering"]'),
 			rows = $('.publishfiltering-row'),
 			options = Symphony.Context.get('publishfiltering'),
 			maxRows = rows.filter('.template').find('.publishfiltering-fields option').length,
@@ -54,6 +51,9 @@
 				if(rows.filter(':not(.template)').length >= maxRows) {
 					addRow.hide();
 				}
+
+				// Highlight filtering
+				highlightFiltering();
 
 				// Clear search
 				filter.on('mousedown.publishfiltering', '.destructor', clear);
@@ -159,8 +159,15 @@
 				contents.find('ul.page').replaceWith(pagination);
 
 				// Render view
-				Symphony.View.render();
+				Symphony.View.render(null, true);
+				highlightFiltering();
 			};
+
+			var highlightFiltering = function() {
+				if(Symphony.Elements.breadcrumbs.find('.inactive').length === 0 && location.search.indexOf('filter') !== -1) {
+					Symphony.Elements.breadcrumbs.append('<p class="inactive"><span>– ' + Symphony.Language.get('filtered') + '</span></p>');
+				}
+			}
 
 			var setURL = function(url) {
 				if(!!(window.history && history.pushState)) {
@@ -185,18 +192,6 @@
 				clear: clear
 			};
 		};
-
-		// Notify about filtering
-		button.on('init.publishfiltering click.publishfiltering', function notifyFilter() {
-			if(location.search.indexOf('filter') !== -1) {
-				if(button.is('.selected')) {
-					$('header .filtered').trigger('detach.notify');
-				}
-				else {
-					notifier.trigger('attach.notify', [Symphony.Language.get('You are viewing a filtered entry index.') + ' <a href="' + location.href.replace(location.search, '') + '">' + Symphony.Language.get('Clear?') + ' </a>', 'filtered']);
-				}
-			}
-		}).trigger('init.publishfiltering');
 
 		// Init filter interface
 		rows.filter(':not(.template)').each(function() {
