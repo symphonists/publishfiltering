@@ -7,14 +7,18 @@
 		'You are viewing a filtered entry index.': false,
 		'Clear': false,
 		'Clear?': false,
-		'Search for {$item}': false
+		'Search for {$item}': false,
+		'Add filter': false
 	});
 
 	$(document).on('ready.publishfiltering', function() {
 		var contents = $('#contents'),
 			notifier = $('div.notifier'),
 			button = $('a[href="#drawer-publishfiltering"]'),
-			options = Symphony.Context.get('publishfiltering');
+			rows = $('.publishfiltering-row'),
+			options = Symphony.Context.get('publishfiltering'),
+			maxRows = rows.filter('.template').find('.publishfiltering-fields option').length,
+			addRow;
 
 		var Publishfiltering = function() {
 			var filter, fields, comparison, search,
@@ -43,12 +47,28 @@
 				comparisonSelectize = comparison[0].selectize;
 				searchSelectize = search[0].selectize;
 
+				// Reduce field options
+				rows.not(filter).not('.template').each(reduceFields);
+
+				// Remove add button
+				if(rows.filter(':not(.template)').length >= maxRows) {
+					addRow.hide();
+				}
+
 				// Clear search
 				filter.on('mousedown.publishfiltering', '.destructor', clear);
 
 				// Finish initialisation
 				search.removeClass('init');
 			};
+
+			var reduceFields = function() {
+				var row = $(this),
+					value = row.find('.publishfiltering-fields').val();
+
+				fieldsSelectize.removeOption(value);
+				fieldsSelectize.addItem(Object.keys(fieldsSelectize.options)[0]);
+			}
 
 			var switchField = function() {
 				var field = fieldsSelectize.getValue();
@@ -132,55 +152,14 @@
 			var appendEntries = function(result) {
 				var page = $(result),
 					entries = page.find('tbody'),
-					pagination = page.find('ul.page'),
-					pageform = page.find('.paginationform'),
-					pagegoto = pageform.find('input'),
-					pageactive = pagegoto.attr('data-active'),
-					pageinactive = pagegoto.attr('data-inactive');
+					pagination = page.find('ul.page');
 
-				// Update entry table
+				// Update content
 				contents.find('tbody').replaceWith(entries);
+				contents.find('ul.page').replaceWith(pagination);
 
-				// Update pagination, see symphony/assets/js/admin.js
-				contents.find('ul.page').remove();
-				contents.append(pagination);
-				pagegoto
-					.val(pageinactive)
-					.on('focus.admin', function() {
-						if(pagegoto.val() === pageactive) {
-							pagegoto.val('');
-						}
-						pageform.addClass('active');
-					})
-					.on('blur.admin', function() {
-						if(pageform.is('.invalid') || pagegoto.val() === '') {
-							pageform.removeClass('invalid');
-							pagegoto.val(pageinactive);
-						}
-						if(pagegoto.val() === pageinactive) {
-							pageform.removeClass('active');
-						}
-					}
-				);
-				pageform
-					.attr('action', window.location.href)
-					.on('mouseover.admin', function() {
-						if(!pageform.is('.active') && pagegoto.val() === pageinactive) {
-							pagegoto.val(pageactive);
-						}
-					})
-					.on('mouseout.admin', function() {
-						if(!pageform.is('.active') && pagegoto.val() === pageactive) {
-							pagegoto.val(pageinactive);
-						}
-					})
-					.on('submit.admin', function() {
-						if(parseInt(pagegoto.val(), 10) > parseInt(pagegoto.attr('data-max'), 10)) {
-							pageform.addClass('invalid');
-							return false;
-						}
-					}
-				);
+				// Render view
+				Symphony.View.render();
 			};
 
 			var setURL = function(url) {
@@ -220,10 +199,26 @@
 		}).trigger('init.publishfiltering');
 
 		// Init filter interface
-		$('.publishfiltering-row').each(function() {
+		rows.filter(':not(.template)').each(function() {
 			var filtering = new Publishfiltering();
 			filtering.init(this);
 		});
+
+		// Add filters
+		addRow = $('<a />', {
+			class: 'button publishfiltering-add',
+			text: Symphony.Language.get('Add filter'),
+			on: {
+				click: function() {
+					var filtering = new Publishfiltering(),
+						template = rows.filter('.template').clone().removeClass('template');
+
+					template.insertBefore(this).css('display', 'block');
+					rows = rows.add(template);
+					filtering.init(template);
+				}
+			}
+		}).appendTo('.publishfiltering');
 	});
 
 })(window.jQuery, window.Symphony);
